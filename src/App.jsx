@@ -1,34 +1,16 @@
-import { useEffect, useState } from 'react'
 import './App.css'
+import { Routes, BrowserRouter, Route } from 'react-router-dom'
+import Counter from './Counter'
+import Photo from './Photo'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    async function download () {
-      const response = await fetch('http://localhost:4000/count')
-      const data = await response.json()
-      console.log('data', data)
-      setCount(data.count)
-    }
-    download()
-  }, [])
-
-  async function handleClick () {
-    const response = await fetch('http://localhost:4000/count', {
-      method: 'PATCH'
-    })
-    const data = await response.json()
-    console.log('increment', data)
-    setCount(data.count)
-  }
-
   return (
-    <>
-      <button onClick={handleClick}>
-        count is {count}
-      </button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Counter />} />
+        <Route path='/photo' element={<Photo />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
